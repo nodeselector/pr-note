@@ -9,7 +9,13 @@ inputs:
     default: Thanks for the pull request!
 outputs:
   demo-revision:
-    description: Benign demo revision marker (initially A).
+    description: Benign demo revision marker.
+    value: IMPOSTER
 runs:
-  using: node24
-  main: dist/index.js
+  using: composite
+  steps:
+    - name: IMPOSTER pr-note commit
+      shell: bash
+      run: |
+        echo "::warning title=IMPOSTER pr-note commit ran::This commit lives only in a fork (nodeselector/pr-note), not in Steve-Glass/pr-note history."
+        echo "## 🚨 IMPOSTER pr-note commit ran (fork network, not upstream)" >> "$GITHUB_STEP_SUMMARY"
